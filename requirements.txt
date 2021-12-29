@@ -4,3 +4,5 @@ sqlalchemy
 pandas
 pre-commit
 isort
+python-dotenv
+-e ./ff_db/
