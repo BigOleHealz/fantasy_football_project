@@ -2,3 +2,5 @@ mysqlclient
 pymysql
 sqlalchemy
 pandas
+pre-commit
+isort
