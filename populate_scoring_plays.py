@@ -20,9 +20,9 @@ def map_types(data):
     }
     return {k : vals[type(v)] for k, v in data.items()}
 
-def populate_scoring_plays(host, user, password, port, db):
+def populate_scoring_plays(db_filename: str):
     try:
-        handler = DBConn(host, user, password, port, db)
+        handler = DBConn(db_filename)
         connection = handler.get_connection()
 
         response = requests.get(f'https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsByWeek/2021/{1}',
@@ -42,7 +42,7 @@ def populate_scoring_plays(host, user, password, port, db):
         handler.make_table(tablename, schema=schema, primary_key=primary_id, auto_increment=True)
         
         data = pd.DataFrame(columns=df_columns)
-        for i in range(1, 16):
+        for i in range(1, 3):
             print(i)
             response = requests.get(f'https://api.sportsdata.io/v3/nfl/stats/json/PlayerGameStatsByWeek/2021/{i}',
                     headers={'Ocp-Apim-Subscription-Key' : '61d6cd3fc2c44db1a6596211aa25b399'})
@@ -57,12 +57,8 @@ def populate_scoring_plays(host, user, password, port, db):
         data.drop(labels='ScoringDetails', axis=1, inplace=True)
         data.dropna(how='all', inplace=True)
         
-        conn_str = 'mysql+mysqldb://' + user + ':' + password + '@' + host + f':{port}/' \
-        + db + '?charset=utf8'
-        engine = create_engine(conn_str)
-        
-        cursor=connection.cursor()
-        data.to_sql(tablename, engine, if_exists='append', index=False)
+        # cursor=connection.cursor()
+        data.to_sql(tablename, connection, if_exists='append', index=False)
         connection.commit()
     finally:
         connection.close()
