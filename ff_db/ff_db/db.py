@@ -42,9 +42,10 @@ class Players(Base):
 
 class PlayerScoringPlays(Base):
     __tablename__ = "player_scoring_plays"
+    index = Column(Integer, primary_key=True)
     GameKey = Column(String)
     SeasonType = Column(Integer)
-    PlayerID = Column(Integer, primary_key=True)
+    PlayerID = Column(Integer)
     Team = Column(String)
     Season = Column(Integer)
     Week = Column(Integer)
@@ -216,7 +217,7 @@ class GameStats(Base):
     TeamID = Column(Integer)
     OpponentID = Column(Integer)
     Day = Column(String)
-    DateTime = Column(DateTime)
+    DateTime = Column(DateTime, primary_key=True)
     GlobalGameID = Column(Integer)
     GlobalTeamID = Column(Integer)
     GlobalOpponentID = Column(Integer)
