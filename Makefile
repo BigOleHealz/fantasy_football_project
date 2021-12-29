@@ -3,7 +3,7 @@ env_name = venv
 env_path = ~/miniconda3/envs/${env_name}/bin
 
 conda-install:
-		conda create -n {env_name} python=3.8 -y
+		conda create -n ${env_name} python=3.8 -y
 		${env_path}/pip install --upgrade pip
 		${env_path}/pip install -r requirements.txt
 		${env_path}/pre-commit install
