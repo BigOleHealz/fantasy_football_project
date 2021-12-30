@@ -9,7 +9,7 @@ conda-install:
 		${env_path}/pre-commit install
 
 install:
-		python3 -m venv ./${env_name}
+		./${env_name}/bin/python3 -m venv ./${env_name}
 		./${env_name}/bin/python3 -m pip install --upgrade pip
 		./${env_name}/bin/pip3 install -r requirements.txt
 		./${env_name}/bin/pre-commit install
